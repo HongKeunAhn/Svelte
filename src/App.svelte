@@ -1,23 +1,35 @@
 <script>
-	import { each } from "svelte/internal";
-
+	import { onMount } from 'svelte';
 	let name = 'world';
-	let fruits = ['Apple', 'Banana', 'Cherry', 'Melon', 'Orange', 'Lemon'];
+	let isGreen = false;
 
-	function deleteFruit() {
-		fruits = fruits.slice(1);
+	// onMount(() => {
+	// 	const box = document.querySelector('.box');
+	// 	box.addEventListener('click', () => {
+	// 		isGreen = !isGreen;
+	// 	});
+	// });
+
+	function enter() {
+		name = 'enter';
+	}
+
+	function leave() {
+		name = 'leave';
 	}
 
 </script>
 
 <main>
 	<h1>Hello {name}!</h1>
-	<ul>
-		{#each fruits as fruit}
-			<li>{fruit}</li>		
-		{/each}
-	</ul>
-	<button on:click={deleteFruit}>Eat it!</button>
+	<div class="box" 
+		style="background-color: {isGreen ? '#1CC20E' : 'tomato'}"
+		on:click={() => { isGreen = !isGreen}}
+		on:mouseenter={enter}
+		on:mouseleave={leave}
+		>
+		Box!
+	</div>
 </main>
 
 <style>
@@ -33,6 +45,13 @@
 		text-transform: uppercase;
 		font-size: 4em;
 		font-weight: 100;
+	}
+
+	.box {
+		width: 300px;
+		height: 150px;
+
+		background-color: tomato;
 	}
 
 	@media (min-width: 640px) {
