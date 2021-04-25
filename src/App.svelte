@@ -1,17 +1,33 @@
 <script>
-	let text = '';
+	let fruits = ['Apple', 'Mango', 'Orange', 'Melon', 'Kiwi', 'Lemon'];
 </script>
 
 <main>
-	<h1>{text}</h1>
-	<input type="text" 
-		value={text}
-		on:input={(e) => {text = e.target.value}} />
-	<input type="text"
-		bind:value={text}
-	/>
+	<h2>Fruits</h2>
+	<ul>
+		{#each fruits as fruit }
+			<li>{fruit}</li>
+		{/each}
+	</ul>
 
-	<button on:click={() => {text = 'Keu.ni'}}>Click</button>
+	<h2>Fruits Reverse</h2>
+	<ul>
+		<!-- 전개 연산자 사용 (복사본 생성)
+		...['Apple', 'Mango', 'Orange', 'Melon', 'Kiwi', 'Lemon']
+		>'Apple', 'Mango', 'Orange', 'Melon', 'Kiwi', 'Lemon'
+		>['Apple', 'Mango', 'Orange', 'Melon', 'Kiwi', 'Lemon']
+		-->
+		{#each [...fruits].reverse() as fruit }
+			<li>{fruit}</li>
+		{/each}
+	</ul>
+
+	<h2>Fruits slice -2</h2>
+	<ul>
+		{#each fruits.slice(-2) as fruit }
+			<li>{fruit}</li>
+		{/each}
+	</ul>
 </main>
 
 <style>
