@@ -1,10 +1,15 @@
 <script>
-	export let name;
+	import { storeName } from './store';
+	import Parent from './Parent.svelte';
+
+	let name = 'world';
+
+	console.log(storeName);
+	$storeName = name;
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<Parent />
 </main>
 
 <style>
