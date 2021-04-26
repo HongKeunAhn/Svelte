@@ -1,4 +1,5 @@
 <script>
+    export let todos;
     export let todo;
 
     let isEdit = false;
@@ -19,7 +20,8 @@
     }
 
     function onDelete() {
-
+        $todos = $todos.filter(item => item.id !== todo.id);
+        console.log(todos);
     }
 </script>
 
