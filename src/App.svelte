@@ -1,18 +1,19 @@
 <script>
 	import { lifecycle, delayRender } from './lifecycle';
 	import Something from './Something.svelte';
+	import Tick from './Tick.svelte';
 
 	let done = delayRender();
-	lifecycle();
+	// lifecycle();
 </script>
 
 <main>
-	{#if $done}
-		
-	<h1>Hello Lifecycle!</h1>
-	{/if}
+	<!-- {#if $done}
+		<h1>Hello Lifecycle!</h1>
+	{/if} -->
 
-	<Something />
+	<!-- <Something /> -->
+	<Tick />
 </main>
 
 <style>
