@@ -1,30 +1,67 @@
 <script>
-	export let name;
+  let count = 0;
+
+  // 선언 - 스벨트 내부에서 자동으로 let 키워드를 붙여준다.
+  $: double = count * 2;
+
+  // 블록
+  $: {
+    console.log(count);
+    console.log(double);
+  }
+
+  // 함수 실행
+  $: count, logger();
+
+  // 즉시 실행 함수 (IIFE)
+  $: count,
+    (() => {
+      console.log('iife: Keuni');
+    })();
+
+  // 조건문(IF)
+  $: if (count > 0) {
+    console.log('if:', double);
+  }
+
+  // 반복문(For)
+  $: for (let i = 0; i < 3; i += 1) {
+    count;
+    console.log('for:', i);
+  }
+
+  // 조건문 (Swich)
+  $: switch (count) {
+    case 1:
+      console.log('swich: 1');
+      break;
+    default:
+      console.log('swich: default');
+  }
+
+  // 유효범위
+  $: {
+    function scope1() {
+      console.log('scope1');
+      function scope2() {
+        console.log('scope2');
+        function scope3() {
+          console.log('scope3', count);
+        }
+        scope3();
+      }
+      scope2();
+    }
+    scope1();
+  }
+
+  function logger() {
+    console.log('fn: Keuni!');
+  }
+
+  function assign() {
+    count += 1;
+  }
 </script>
 
-<main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-</main>
-
-<style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
-</style>
+<button on:click={assign}>Assign!</button>
