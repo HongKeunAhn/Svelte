@@ -1,30 +1,33 @@
 <script>
-	export let name;
+	import axios from 'axios';
+
+	let apiKey = '9d38c929';
+	let title = '';
+	let movies = null;
+	let _error = null;
+	let loading = false;
+
+	async function searchMovies() {
+		try {
+			const response = await axios.get(`http://www.omdbapi.com/?apikey=${apiKey}&s=${title}`);
+			movies = response.data.Search;	
+		} catch (error) {
+			_error = error;
+		}
+	};
 </script>
 
-<main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-</main>
+<input type="text" bind:value={title}>
+<button on:click={searchMovies}>Search!</button>
 
-<style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
-</style>
+{#if loading}
+	<p style="color: royalblue;">Loading...</p>
+{:else if movies}
+	<ul>	
+		{#each movies as movie}
+			<li>{movie.Title}</li>
+		{/each}	
+	</ul>
+{:else if _error}
+	<p style="color: red;">{_error.message}</p>
+{/if}
