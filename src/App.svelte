@@ -8,11 +8,20 @@
 	let loading = false;
 
 	async function searchMovies() {
+		if (loading) {
+			return;
+		}
+		
+		movies = null;
+		_error = null;
+		loading = true;
 		try {
 			const response = await axios.get(`http://www.omdbapi.com/?apikey=${apiKey}&s=${title}`);
 			movies = response.data.Search;	
 		} catch (error) {
 			_error = error;
+		} finally {
+			loading = false;
 		}
 	};
 </script>
