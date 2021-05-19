@@ -1,10 +1,47 @@
 <script>
-	export let name;
+import { each } from "svelte/internal";
+
+
+	let fruits = [
+		{ id: '1', name: 'Apple' },
+		{ id: '2', name: 'Banana' },
+		{ id: '3', name: 'Cherry' },
+	];
+
+	function assign(fruit) {
+
+	fruit.name += '!';
+	fruits = fruits;
+	// $$invalidate(0. fruits);
+	}
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<section>
+		{#each fruits as fruit }
+			<div on:click={() => assign(fruit)}>
+				{fruit.name}
+			</div>
+		{/each}		
+	</section>
+
+	<section>
+		{#each fruits as fruit (fruit.id) }
+			<div on:click={() => fruit.name += '!'}>
+				{fruit.name}
+			</div>
+		{/each}
+		<!-- $$invalidate(0, each_value_1[fruit_index].name += "!")  -->
+	</section>
+
+	<section>
+		{#each fruits as {id, name} (id) }
+			<div on:click={() => name += '!'}>
+				{name}
+			</div>
+		{/each}
+		<!-- $$invalidate(0, each_value_1[fruit_index].name += "!")  -->	
+	</section>
 </main>
 
 <style>
@@ -15,10 +52,10 @@
 		margin: 0 auto;
 	}
 
-	h1 {
-		color: #ff3e00;
+	section {
+		border: 1px solid #ff3e00;
 		text-transform: uppercase;
-		font-size: 4em;
+		font-size: 2rem;
 		font-weight: 100;
 	}
 
