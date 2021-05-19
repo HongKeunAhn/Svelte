@@ -3,40 +3,38 @@
 
 	let apiKey = '9d38c929';
 	let title = '';
-	let movies = null;
-	let _error = null;
-	let loading = false;
+	let promise = new Promise((resolve) => {
+		resolve([]);
+	});
 
-	async function searchMovies() {
-		if (loading) {
-			return;
-		}
-		
-		movies = null;
-		_error = null;
-		loading = true;
-		try {
+	function searchMovies() {
+		return new Promise( async (resolve, reject) => {
+			try {
 			const response = await axios.get(`http://www.omdbapi.com/?apikey=${apiKey}&s=${title}`);
-			movies = response.data.Search;	
+			resolve(response.data.Search);
 		} catch (error) {
-			_error = error;
+			reject(error);
 		} finally {
-			loading = false;
+			console.log('Done!');
 		}
+		});
 	};
 </script>
 
 <input type="text" bind:value={title}>
-<button on:click={searchMovies}>Search!</button>
+<button on:click={() => {
+	promise = searchMovies();
+}}>Search!</button>
 
-{#if loading}
+
+{#await promise}
 	<p style="color: royalblue;">Loading...</p>
-{:else if movies}
+{:then movies}
 	<ul>	
 		{#each movies as movie}
 			<li>{movie.Title}</li>
 		{/each}	
 	</ul>
-{:else if _error}
+{:catch _error}
 	<p style="color: red;">{_error.message}</p>
-{/if}
+{/await}
