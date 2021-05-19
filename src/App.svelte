@@ -1,10 +1,29 @@
 <script>
-	export let name;
+	// let promise = new Promise(resolve => resolve('Click Button!'));
+	let promise = Promise.resolve('Click Button!');
+
+	function fetchName() {
+		return new Promise((resolve, reject) => {
+			setTimeout(() => {
+				resolve('Keuni');
+			}, 0);
+		});
+	}
+
+	function onFetchNameBtnClick() {
+		promise = fetchName();
+	}
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<button on:click={onFetchNameBtnClick}>
+		Fetch name!
+	</button>
+
+	{#await promise then name}
+	<!-- 이행(Fulfilled) -->
+		<h1>{name}</h1>
+	{/await}
 </main>
 
 <style>
@@ -13,13 +32,6 @@
 		padding: 1em;
 		max-width: 240px;
 		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
 	}
 
 	@media (min-width: 640px) {
