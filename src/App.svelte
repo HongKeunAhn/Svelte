@@ -1,13 +1,5 @@
 <script>
-	import { onMount } from 'svelte';
-	import Keuni from './Keuni.svelte';
-
-	let keuni;
-
-	onMount(() => {
-		console.log(keuni);
-		console.log(keuni.title);
-	})
+	import Class3 from './Class3.svelte';
 </script>
 
-<Keuni title='Good~' bind:this={keuni}/>
+<Class3 />
