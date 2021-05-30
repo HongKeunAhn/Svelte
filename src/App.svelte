@@ -1,5 +1,5 @@
 <script>
-	import Class3 from './Class3.svelte';
+	import Class5 from './Class5.svelte';
 </script>
 
-<Class3 />
+<Class5 />
